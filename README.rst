@@ -1,7 +1,10 @@
 akka-examples
 =============
 
-Some examples for the awesome `Akka`_ platform (version 2.0 and later only). More details to come ...
+Some examples for the awesome `Akka`_ platform (version 2.0 and later only):
+
+- simple: "Hello world!" the Akka way
+- nonblocking: Asynchronous and non-blocking serving of HTTP via Akka and `Unfiltered`_
 
 
 Contribution policy
@@ -16,4 +19,5 @@ License
 This code is open source software licensed under the `Apache 2.0 License`_. Feel free to use it accordingly.
 
 .. _`Akka`: http://akka.io/
+.. _`Unfiltered`: https://github.com/unfiltered/unfiltered
 .. _`Apache 2.0 License`: http://www.apache.org/licenses/LICENSE-2.0.html
