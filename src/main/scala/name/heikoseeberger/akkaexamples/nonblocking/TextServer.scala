@@ -26,6 +26,8 @@ object TextServer {
   def main(args: Array[String]): Unit = {
     println("Waiting for your requests ...")
     Http(8080).plan(plan).run()
+    println("Shutting down ...")
+    actorSystem.stop()
   }
 
   private def plan = Planify {
