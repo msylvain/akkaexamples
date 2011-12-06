@@ -6,7 +6,8 @@ name := "akkaexamples"
 // version is defined in version.sbt in order to support sbt-release
 
 libraryDependencies ++= Seq(
-  "com.typesafe.akka" % "akka-actor" % "2.0-SNAPSHOT"
+  "com.typesafe.akka" % "akka-actor" % "2.0-SNAPSHOT",
+  "net.databinder" %% "unfiltered-netty-server" % "0.5.3"
 )
 
 scalacOptions ++= Seq("-unchecked", "-deprecation")
