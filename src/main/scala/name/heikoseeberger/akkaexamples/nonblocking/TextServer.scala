@@ -30,7 +30,7 @@ object TextServer {
 
   private def plan = Planify {
     case request @ Params(NonEmptyText(text)) =>
-      create(new ResponderActor(request)) ! ResponderActor.RespondTo(text)
+      actorSystem.actorOf(props(new ResponderActor(request))) ! ResponderActor.RespondTo(text)
   }
 
   private object NonEmptyText extends Params.Extract("text", Params.first ~> Params.nonempty)

@@ -40,8 +40,8 @@ class ResponderActor(responder: Async.Responder[HttpResponse]) extends Actor {
 
   override protected def receive = {
     case RespondTo(text) =>
-      create(new WordCountActor) ! WordCountActor.CountWords(text, self)
-      create(new TranslationActor) ! TranslationActor.TranslateText(text, self)
+      context.actorOf(props(new WordCountActor)) ! WordCountActor.CountWords(text)
+      context.actorOf(props(new TranslationActor)) ! TranslationActor.TranslateText(text)
     case WordCount(number) =>
       this.number = Some(number)
       replyWhenDone()

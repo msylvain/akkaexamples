@@ -28,16 +28,15 @@ object Simple {
 class PrintActor extends Actor {
 
   override def receive = {
-    case "Hello" => system.actorOf[ReverseActor] ! "Hello world!"
+    case "Hello" => context.actorOf[ReverseActor] ! "Hello world!"
     case message =>
       println(message)
       system.stop()
   }
 }
 
-class ReverseActor extends Actor {
-
-  override def receive = {
+abstract class ReverseActor extends Actor {
+  def perceive: Receive = { // Oops, I wanted to implement receive :-(
     case message =>
       sender ! message.toString.reverse
       self.stop()

@@ -19,16 +19,16 @@ package name.heikoseeberger.akkaexamples.nonblocking
 import akka.actor.{ Actor, ActorRef }
 
 object WordCountActor {
-  case class CountWords(text: String, responderActor: ActorRef)
+  case class CountWords(text: String)
 }
 
 class WordCountActor extends Actor {
   import WordCountActor._
 
   override protected def receive = {
-    case CountWords(text, responderActor) =>
+    case CountWords(text) =>
       Thread.sleep(100)
-      responderActor ! ResponderActor.WordCount(text split " " size)
+      sender ! ResponderActor.WordCount(text split " " size)
       self.stop()
   }
 }

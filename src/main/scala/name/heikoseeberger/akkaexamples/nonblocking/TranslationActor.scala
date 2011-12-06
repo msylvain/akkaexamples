@@ -19,16 +19,16 @@ package name.heikoseeberger.akkaexamples.nonblocking
 import akka.actor.{ Actor, ActorRef }
 
 object TranslationActor {
-  case class TranslateText(text: String, responderActor: ActorRef)
+  case class TranslateText(text: String)
 }
 
 class TranslationActor extends Actor {
   import TranslationActor._
 
   override protected def receive = {
-    case TranslateText(text, responderActor) =>
+    case TranslateText(text) =>
       Thread.sleep(100)
-      responderActor ! ResponderActor.TranslatedText(text.reverse)
+      sender ! ResponderActor.TranslatedText(text.reverse)
       self.stop()
   }
 }
