@@ -20,11 +20,5 @@ import akka.actor.{ Actor, ActorContext, ActorSystem, Props }
 
 package object nonblocking {
 
-  private[nonblocking] val actorSystem = ActorSystem()
-
-  private val dispatcher =
-    actorSystem.dispatcherFactory.newDispatcher("default").setCorePoolSize(4).build
-
-  private[nonblocking] def props(actor: => Actor) =
-    Props(actor).withDispatcher(dispatcher)
+  private[nonblocking] val actorSystem = ActorSystem("nonblocking")
 }

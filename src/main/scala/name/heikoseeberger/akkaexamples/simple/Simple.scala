@@ -16,29 +16,30 @@
 
 package name.heikoseeberger.akkaexamples.simple
 
-import akka.actor.{ Actor, ActorSystem }
+import akka.actor.{ Actor, ActorSystem, Props }
 
 object Simple {
 
   def main(args: Array[String]): Unit = {
-    ActorSystem().actorOf[PrintActor] ! "Hello"
+    ActorSystem("simple").actorOf(Props[PrintActor], "print") ! "Hello"
   }
 }
 
 class PrintActor extends Actor {
 
   override def receive = {
-    case "Hello" => context.actorOf[ReverseActor] ! "Hello world!"
+    case "Hello" => context.actorOf(Props[ReverseActor], "reverse") ! "Hello world!"
     case message =>
       println(message)
-      system.stop()
+      context.system.shutdown()
   }
 }
 
-abstract class ReverseActor extends Actor {
-  def perceive: Receive = { // Oops, I wanted to implement receive :-(
+class ReverseActor extends Actor {
+
+  override def receive = {
     case message =>
       sender ! message.toString.reverse
-      self.stop()
+      context.stop(self)
   }
 }

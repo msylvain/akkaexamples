@@ -16,11 +16,10 @@
 
 package name.heikoseeberger.akkaexamples.nonblocking
 
-import org.jboss.netty.handler.codec.http.HttpResponse
 import akka.actor.{ Actor, Props }
+import org.jboss.netty.handler.codec.http.HttpResponse
 import unfiltered.Async
 import unfiltered.response.{ PlainTextContent, ResponseString }
-import akka.actor.Props
 
 object ResponderActor {
 
@@ -40,8 +39,10 @@ class ResponderActor(responder: Async.Responder[HttpResponse]) extends Actor {
 
   override protected def receive = {
     case RespondTo(text) =>
-      context.actorOf(props(new WordCountActor)) ! WordCountActor.CountWords(text)
-      context.actorOf(props(new TranslationActor)) ! TranslationActor.TranslateText(text)
+      val wordCountActor = context.actorOf(Props[WordCountActor].withDispatcher("nonblocking-dispatcher"))
+      wordCountActor ! WordCountActor.CountWords(text)
+      val translationActor = context.actorOf(Props[TranslationActor].withDispatcher("nonblocking-dispatcher"))
+      translationActor ! TranslationActor.TranslateText(text)
     case WordCount(number) =>
       this.number = Some(number)
       replyWhenDone()
@@ -56,6 +57,6 @@ class ResponderActor(responder: Async.Responder[HttpResponse]) extends Actor {
       t <- text
     } {
       responder.respond(PlainTextContent ~> ResponseString("%s words have been translated to: %s".format(n, t)))
-      self.stop()
+      context.stop(self)
     }
 }

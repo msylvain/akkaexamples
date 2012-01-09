@@ -29,6 +29,6 @@ class WordCountActor extends Actor {
     case CountWords(text) =>
       Thread.sleep(100)
       sender ! ResponderActor.WordCount(text split " " size)
-      self.stop()
+      context.stop(self)
   }
 }

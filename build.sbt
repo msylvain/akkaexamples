@@ -5,8 +5,10 @@ name := "akkaexamples"
 
 // version is defined in version.sbt in order to support sbt-release
 
+resolvers += "Akka Repository" at "http://akka.io/repository"
+
 libraryDependencies ++= Seq(
-  "com.typesafe.akka" % "akka-actor" % "2.0-SNAPSHOT",
+  "com.typesafe.akka" % "akka-actor" % "2.0-M2",
   "net.databinder" %% "unfiltered-netty-server" % "0.5.3"
 )
 
@@ -24,3 +26,5 @@ publishTo <<= (version) { version =>
 publishMavenStyle := false
 
 seq(scalariformSettings: _*)
+
+EclipseKeys.withSource := true

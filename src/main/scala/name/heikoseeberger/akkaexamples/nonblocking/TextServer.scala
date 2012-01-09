@@ -17,8 +17,8 @@
 package name.heikoseeberger.akkaexamples.nonblocking
 
 import akka.actor.{ ActorSystem, Props }
-import unfiltered.netty.async.Planify
 import unfiltered.netty.Http
+import unfiltered.netty.async.Planify
 import unfiltered.request.Params
 
 object TextServer {
@@ -27,12 +27,14 @@ object TextServer {
     println("Waiting for your requests ...")
     Http(8080).plan(plan).run()
     println("Shutting down ...")
-    actorSystem.stop()
+    actorSystem.shutdown()
   }
 
   private def plan = Planify {
     case request @ Params(NonEmptyText(text)) =>
-      actorSystem.actorOf(props(new ResponderActor(request))) ! ResponderActor.RespondTo(text)
+      val responderActor =
+        actorSystem.actorOf(Props(new ResponderActor(request)).withDispatcher("nonblocking-dispatcher"))
+      responderActor ! ResponderActor.RespondTo(text)
   }
 
   private object NonEmptyText extends Params.Extract("text", Params.first ~> Params.nonempty)

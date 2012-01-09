@@ -29,6 +29,6 @@ class TranslationActor extends Actor {
     case TranslateText(text) =>
       Thread.sleep(100)
       sender ! ResponderActor.TranslatedText(text.reverse)
-      self.stop()
+      context.stop(self)
   }
 }
