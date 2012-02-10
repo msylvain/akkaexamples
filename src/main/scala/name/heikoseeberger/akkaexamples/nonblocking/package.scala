@@ -1,5 +1,5 @@
 /*
- * Copyright 2011 Heiko Seeberger
+ * Copyright 2011-2012 Heiko Seeberger
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -16,7 +16,7 @@
 
 package name.heikoseeberger.akkaexamples
 
-import akka.actor.{ Actor, ActorContext, ActorSystem, Props }
+import akka.actor.ActorSystem
 
 package object nonblocking {
 

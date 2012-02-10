@@ -1,5 +1,5 @@
 /*
- * Copyright 2011 Heiko Seeberger
+ * Copyright 2011-2012 Heiko Seeberger
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -16,7 +16,7 @@
 
 package name.heikoseeberger.akkaexamples.nonblocking
 
-import akka.actor.{ ActorSystem, Props }
+import akka.actor.Props
 import unfiltered.netty.Http
 import unfiltered.netty.async.Planify
 import unfiltered.request.Params
@@ -33,7 +33,7 @@ object TextServer {
   private def plan = Planify {
     case request @ Params(NonEmptyText(text)) =>
       val responderActor =
-        actorSystem.actorOf(Props(new ResponderActor(request)).withDispatcher("nonblocking-dispatcher"))
+        actorSystem.actorOf(Props(new ResponderActor(request)))
       responderActor ! ResponderActor.RespondTo(text)
   }
 

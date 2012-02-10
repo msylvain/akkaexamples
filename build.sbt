@@ -8,7 +8,7 @@ name := "akkaexamples"
 resolvers += "Akka Repository" at "http://akka.io/repository"
 
 libraryDependencies ++= Seq(
-  "com.typesafe.akka" % "akka-actor" % "2.0-M2",
+  "com.typesafe.akka" % "akka-actor" % "2.0-M4",
   "net.databinder" %% "unfiltered-netty-server" % "0.5.3"
 )
 
@@ -16,7 +16,10 @@ scalacOptions ++= Seq("-unchecked", "-deprecation")
 
 publishTo <<= (version) { version =>
   def hseeberger(name: String) =
-    Resolver.file("hseeberger-%s" format name, file("/Users/heiko/projects/hseeberger.github.com/%s" format name))(Resolver.ivyStylePatterns)
+    Resolver.file(
+      "hseeberger-%s" format name,
+      file("/Users/heiko/projects/hseeberger.github.com/%s" format name)
+    )(Resolver.ivyStylePatterns)
   val resolver =
     if (version endsWith "SNAPSHOT") hseeberger("snapshots")
     else hseeberger("releases")
@@ -26,5 +29,3 @@ publishTo <<= (version) { version =>
 publishMavenStyle := false
 
 seq(scalariformSettings: _*)
-
-EclipseKeys.withSource := true

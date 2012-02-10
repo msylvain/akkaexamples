@@ -1,5 +1,5 @@
 /*
- * Copyright 2011 Heiko Seeberger
+ * Copyright 2011-2012 Heiko Seeberger
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -39,9 +39,9 @@ class ResponderActor(responder: Async.Responder[HttpResponse]) extends Actor {
 
   override protected def receive = {
     case RespondTo(text) =>
-      val wordCountActor = context.actorOf(Props[WordCountActor].withDispatcher("nonblocking-dispatcher"))
+      val wordCountActor = context.actorOf(Props[WordCountActor])
       wordCountActor ! WordCountActor.CountWords(text)
-      val translationActor = context.actorOf(Props[TranslationActor].withDispatcher("nonblocking-dispatcher"))
+      val translationActor = context.actorOf(Props[TranslationActor])
       translationActor ! TranslationActor.TranslateText(text)
     case WordCount(number) =>
       this.number = Some(number)
