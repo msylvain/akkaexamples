@@ -28,6 +28,7 @@ object TextServer {
     Http(8080).plan(plan).run()
     println("Shutting down ...")
     actorSystem.shutdown()
+    println("Actor system shut down.")
   }
 
   private def plan = Planify {

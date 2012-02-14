@@ -8,7 +8,7 @@ name := "akkaexamples"
 resolvers += "Akka Repository" at "http://akka.io/repository"
 
 libraryDependencies ++= Seq(
-  "com.typesafe.akka" % "akka-actor" % "2.0-M4",
+  "com.typesafe.akka" % "akka-actor" % "2.0-RC1",
   "net.databinder" %% "unfiltered-netty-server" % "0.5.3"
 )
 
