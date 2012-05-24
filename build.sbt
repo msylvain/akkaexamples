@@ -5,10 +5,10 @@ name := "akkaexamples"
 
 // version is defined in version.sbt in order to support sbt-release
 
-resolvers += "Akka Repository" at "http://akka.io/repository"
+resolvers += "Akka Repository" at "http://repo.akka.io/releases/"
 
 libraryDependencies ++= Seq(
-  "com.typesafe.akka" % "akka-actor" % "2.0-RC1",
+  "com.typesafe.akka" % "akka-actor" % "2.0.1",
   "net.databinder" %% "unfiltered-netty-server" % "0.5.3"
 )
 
