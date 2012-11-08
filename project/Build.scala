@@ -7,33 +7,39 @@ object Build extends Build {
   lazy val root = Project(
     "akkaexamples",
     file("."),
-    settings = commonSettings ++ Seq(
-      libraryDependencies ++= Seq(
+    settings = Defaults.defaultSettings ++
+      scalariformSettings ++
+      Seq(
+        organization := "name.heikoseeberger",
+        // version is defined in version.sbt to support sbt-release
+        scalaVersion := "2.10.0-RC1",
+        scalaBinaryVersion := "2.10.0-RC1",
+        scalacOptions ++= Seq("-unchecked", "-deprecation", "-language:_"),
+        resolvers ++= Seq(
+          "spray repo" at "http://repo.spray.io",
+          Opts.resolver.sonatypeSnapshots
+        ),
+        libraryDependencies ++= Seq(
+          Dependencies.Compile.SprayCan,
+          Dependencies.Compile.SprayRouting,
+          Dependencies.Compile.AkkaSlf4j,
+          Dependencies.Compile.LogbackClassic,
+          Dependencies.Test.ScalaTest,
+          Dependencies.Test.ScalaCheck,
+          Dependencies.Test.ScalaMock
+        ),
+        initialCommands in console := "import name.heikoseeberger.akkaexamples._",
       )
-    )
   )
-
-  def commonSettings = 
-    Defaults.defaultSettings ++ 
-    scalariformSettings ++
-    Seq(
-      organization := "name.heikoseeberger",
-      // version is defined in version.sbt to support sbt-release
-      scalaVersion := "2.10.0-RC1",
-      scalaBinaryVersion := "2.10.0-RC1",
-      scalacOptions ++= Seq("-unchecked", "-deprecation", "-language:_"),
-      libraryDependencies ++= Seq(
-        Dependencies.Test.ScalaTest,
-        Dependencies.Test.ScalaCheck,
-        Dependencies.Test.ScalaMock
-      ),
-      initialCommands in console := "import name.heikoseeberger.akkaexamples._"
-    )
 
   object Dependencies {
 
     object Compile {
-      val Config = "com.typesafe" % "config" % "1.0.0"
+      //      val Config = "com.typesafe" % "config" % "1.0.0"
+      val SprayCan = "io.spray" % "spray-can" % "1.1-M4.2"
+      val SprayRouting = "io.spray" % "spray-routing" % "1.1-M4.2"
+      val AkkaSlf4j = "com.typesafe.akka" %% "akka-slf4j" % "2.1.0-RC1"
+      val LogbackClassic = "ch.qos.logback" % "logback-classic" % "1.0.7"
     }
 
     object Test {

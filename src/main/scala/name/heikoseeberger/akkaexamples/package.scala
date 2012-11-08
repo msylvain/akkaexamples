@@ -16,6 +16,12 @@
 
 package name.heikoseeberger
 
+import scala.concurrent.duration.FiniteDuration
+
 package object akkaexamples {
 
+  def burnCycles(duration: FiniteDuration): Unit = {
+    val deadline = duration.fromNow
+    while (deadline.hasTimeLeft) Thread.`yield`()
+  }
 }
